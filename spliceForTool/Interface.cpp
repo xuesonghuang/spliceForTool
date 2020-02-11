@@ -54,12 +54,13 @@ Interface::Interface() {
 	systemRunId = org::opensplice::domain::default_id();
 }
 
-bool Interface::start(initTool p_initTool, setToTool p_setToTool,
+bool Interface::start(const char* configName,
+	initTool p_initTool, setToTool p_setToTool,
 	setFinish p_setFinish, endTool p_endTool) {
 
 	try {
 		// 1.Read Config
-		if (!parseConfig()) {
+		if (!parseConfig(configName)) {
 			cout << "[error] system config fail" << endl;
 			return false;
 		}
@@ -205,10 +206,10 @@ bool Interface::process(Msg messageIn) {
 	return true;
 }
 
-bool Interface::parseConfig() {
+bool Interface::parseConfig(const char* configName) {
 
 	// File Check
-	ifstream in("config.ini");
+	ifstream in(configName);
 	stringstream ss;
 	ss << in.rdbuf();
 	if (ss.fail()) {

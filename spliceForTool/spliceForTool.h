@@ -16,13 +16,15 @@
 
 /**
 * @brief       dllStart                         dll启动
+* @param       [in]               configName    配置文件名
 * @param       [in]               p_initTool    初始化工具
 * @param       [in]               p_setToTool   向工具推数据
 * @param       [in]               p_setFinish   允许工具推进
 * @param       [in]               p_endTool     结束工具
 */
-extern "C" SPLICEFORTOOL_API int dllStart(initTool p_initTool,
-	setToTool p_setToTool, setFinish p_setFinish, endTool p_endTool);
+extern "C" SPLICEFORTOOL_API int dllStart(const char* configName,
+	initTool p_initTool, setToTool p_setToTool,
+	setFinish p_setFinish, endTool p_endTool);
 
 /**
 * @brief       dllSetValue                      向dll推数据

@@ -44,7 +44,8 @@ public:
 	}
 
 	// real interfaces
-	bool start(initTool p_initTool, setToTool p_setToTool,
+	bool start(const char* configName,
+		initTool p_initTool, setToTool p_setToTool,
 		setFinish p_setFinish, endTool p_endTool);
 	bool setValue(string name, string data);
 	bool advance();
@@ -59,7 +60,7 @@ private:
 	string nodeName;
 
 	// ½âÎöÅäÖÃÎÄ¼ş
-	bool parseConfig();
+	bool parseConfig(const char* configName);
 
 	// time management
 	double currentTime;
