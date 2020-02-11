@@ -6,5 +6,8 @@
 // WIN32_WINNT 宏设置为要支持的平台，然后再包括 SDKDDKVer.h。
 
 #include <WinSDKVer.h>
+
+// OpenSplice必须的一句
 #define _WIN32_WINNT 0x0502
+
 #include <SDKDDKVer.h>

@@ -22,6 +22,7 @@ typedef void(*endTool)();
 #define SIMULATION_RUN "simulation_run"
 #define SIMULATION_END "simulation_end"
 
+// current engine name
 #define ENGINENAME "SIMUengine777"
 
 using namespace std;
@@ -36,6 +37,7 @@ private:
 	Interface& operator=(const Interface&);
 
 public:
+	// singleton
 	static Interface& getInstance() {
 		static Interface instance;
 		return instance;
@@ -63,7 +65,7 @@ private:
 	double currentTime;
 	double step;
 
-	// 订阅发布
+	// 订阅发布的存储
 	vector<string> pubNames;
 	vector<string> subNames;
 

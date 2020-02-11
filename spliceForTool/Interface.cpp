@@ -2,6 +2,7 @@
 #include "stdafx.h"
 #include "Interface.h"
 
+// DDS接收方法
 class ReadCondHandler {
 public:
 	/**
@@ -14,8 +15,11 @@ public:
 		dds::sub::status::DataState dataState = cond.state_filter();
 		/** retrieve the associated reader from the condition */
 		dds::sub::DataReader<Msg> dr = cond.data_reader();
+
 		dds::sub::LoanedSamples<Msg> samples = dr.select().state(dataState).take();
 		// dds::sub::LoanedSamples<Msg> samples = dr.select().content(cond).take();
+		// dds::sub::LoanedSamples<Msg> samples = dr.take();
+
 		for (dds::sub::LoanedSamples<Msg>::const_iterator sample = samples.begin();
 			sample < samples.end(); ++sample) {
 			if ((*sample).info().valid()) {
@@ -27,7 +31,7 @@ private:
 	dds::sub::status::DataState& dataState;
 };
 
-
+// 线程方法
 bool wsServe(dds::core::cond::WaitSet waitSet, string systemId) {
 	cout << "[checked] <" << systemId << "> "
 		<< "dds detached thread starts well" << endl;
@@ -75,11 +79,15 @@ bool Interface::start(initTool p_initTool, setToTool p_setToTool,
 				<< "start dds fail" << endl;
 			return false;
 		}
+
 		thread th(wsServe, waitSet, systemId);
 		th.detach();
 
 		cout << "-----CONGRATULATIONS, ALMOST DONE!-----" << endl;
-		return publish(NODE_READY, "me");;
+
+		// TODO 处理
+		Sleep(1000);
+		return publish(NODE_READY, "me");
 	}
 	catch (runtime_error& e) {
 		cout << "[error] <" << systemId << "> "
@@ -300,7 +308,7 @@ bool Interface::startServerDDS() {
 bool Interface::publish(string topic, string data) {
 	random_device rd;
 	mt19937 mt(rd());
-	
+
 	Msg message;
 	message.subjectId() = mt();
 	message.systemId() = systemId;
